@@ -10,11 +10,13 @@
 
 ## Training
 
+Running the following command and experiment will be launched.
+
 ```bash
 python3 ./train.py
 ```
 
-If you want to run other experiments, you should only modify the loss in config.py
+If you want to run other experiments, you just need modify following losses in config.py
 
 + s_resnet18.t_resnet34.cd.ce
 ```python
@@ -51,6 +53,8 @@ loss_list = [
   
   + student: resnet18
   + teacher: resnet34
+
++ loss detail
 
 + result
 
