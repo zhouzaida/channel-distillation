@@ -14,6 +14,33 @@
 python3 ./train.py
 ```
 
+If you want to run other experiments, you should only modify the loss in config.py
+
++ s_resnet18.t_resnet34.cd.ce
+```python
+loss_list = [
+    {"loss_name": "CELoss", "loss_rate": 1, "factor": 1, "loss_type": "ce_family", "loss_rate_decay": "lrdv1"},
+    {"loss_name": "CDLoss", "loss_rate": 6, "factor": 1, "loss_type": "fd_family", "loss_rate_decay": "lrdv1"},
+]
+```
+
++ s_resnet18.t_resnet34.cd.ce.lrdv2
+```python
+loss_list = [
+    {"loss_name": "CELoss", "loss_rate": 1, "factor": 1, "loss_type": "ce_family", "loss_rate_decay": "lrdv2"},
+    {"loss_name": "CDLoss", "loss_rate": 6, "factor": 0.9, "loss_type": "fd_family", "loss_rate_decay": "lrdv2"},
+]
+```
+
++ s_resnet18.t_resnet34.cd.kdv2.lrdv2
+```python
+loss_list = [
+    {"loss_name": "CELoss", "loss_rate": 1, "factor": 1, "loss_type": "ce_family", "loss_rate_decay": "lrdv2"},
+    {"loss_name": "KDLossv2", "T": 1, "loss_rate": 1, "factor": 1, "loss_type": "kdv2_family", "loss_rate_decay": "lrdv2"},
+    {"loss_name": "CDLoss", "loss_rate": 6, "factor": 0.9, "loss_type": "fd_family", "loss_rate_decay": "lrdv2"},
+]
+```
+
 ## Experiments
 
 + dataset
