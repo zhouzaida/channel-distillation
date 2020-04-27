@@ -10,6 +10,10 @@
 
 ## Training
 
+```bash
+python3 ./train.py
+```
+
 ## Experiments
 
 + dataset

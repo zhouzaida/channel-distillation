@@ -25,7 +25,7 @@ class ChannelDistillResNet1834(nn.Module):
             m.requires_grad = False
 
     def forward(self, x):
-        ss = self.student(x)  # ss为list，包含四个中间特征层和一个logit层
+        ss = self.student(x)
         ts = self.teacher(x)
         for i in range(len(self.s_t_pair)):
             ss[i] = self.connector[i](ss[i])
