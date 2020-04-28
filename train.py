@@ -34,7 +34,10 @@ def main():
 
     Config.gpus = torch.cuda.device_count()
     logger.info("use {} gpus".format(Config.gpus))
-    config = {key: value for key, value in Config.__dict__.items() if not key.startswith("__")}
+    config = {
+        key: value
+        for key, value in Config.__dict__.items() if not key.startswith("__")
+    }
     logger.info(f"args: {config}")
 
     start_time = time.time()
@@ -108,7 +111,7 @@ def main():
         checkpoint = torch.load(Config.evaluate, map_location=torch.device("cpu"))
         net.load_state_dict(checkpoint["model_state_dict"])
         prec1, prec5 = validate(val_loader, net)
-        logger.info(f"epoch {checkpoint["epoch"]:0>3d}, top1 acc: {prec1:.2f}%, top5 acc: {prec5:.2f}%")
+        logger.info(f"epoch {checkpoint['epoch']:0>3d}, top1 acc: {prec1:.2f}%, top5 acc: {prec5:.2f}%")
         return
 
     start_epoch = 1
@@ -121,9 +124,9 @@ def main():
         optimizer.load_state_dict(checkpoint["optimizer_state_dict"])
         scheduler.load_state_dict(checkpoint["scheduler_state_dict"])
         logger.info(
-            f"finish resuming model from {Config.resume}, epoch {checkpoint["epoch"]}, "
-            f"loss: {checkpoint["loss"]:3f}, lr: {checkpoint["lr"]:.6f}, "
-            f"top1_acc: {checkpoint["acc"]}%, loss {checkpoint["loss"]}%"
+            f"finish resuming model from {Config.resume}, epoch {checkpoint['epoch']}, "
+            f"loss: {checkpoint['loss']:3f}, lr: {checkpoint['lr']:.6f}, "
+            f"top1_acc: {checkpoint['acc']}%, loss {checkpoint['loss']}%"
         )
 
     if not os.path.exists(Config.checkpoints):
@@ -132,8 +135,8 @@ def main():
     logger.info("start training")
     best_acc = 0.
     for epoch in range(start_epoch, Config.epochs + 1):
-        prec1, prec5, loss = train(train_loader, net, criterion, optimizer, scheduler, 
-                                   epoch)
+        prec1, prec5, loss = train(train_loader, net, criterion, optimizer, scheduler,
+                                   epoch, looger)
         logger.info(f"train: epoch {epoch:0>3d}, top1 acc: {prec1:.2f}%, top5 acc: {prec5:.2f}%")
 
         prec1, prec5 = validate(val_loader, net)
@@ -161,7 +164,7 @@ def main():
     logger.info(f"finish training, total training time: {training_time:.2f} hours")
 
 
-def train(train_loader, net, criterion, optimizer, scheduler, epoch):
+def train(train_loader, net, criterion, optimizer, scheduler, epoch, logger):
     top1 = AverageMeter()
     top5 = AverageMeter()
     loss_total = AverageMeter()

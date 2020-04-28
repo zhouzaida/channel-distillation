@@ -69,6 +69,18 @@ loss_list = [
 | s_resnet18.t_resnet34.cd.kd.lrdv2 | 1-crop | 27.99 | 9.31 | Ours |
 | s_resnet18.t_resnet34.cd.kdv2.lrdv2 | 1-crop | 27.73(27.68) | 9.22(9.39) |ZZD(ZGCR) |
 
++ comparion result with other methods
+
+| Method | Model | Top-1(%) | Top-5(%) | Reference |
+| -- | -- | -- | -- | -- |
+| Teacher | ResNet34 | 73.30 | 91.42 | [PyTorch](https://pytorch.org/hub/pytorch_vision_resnet/) |
+| Student | ResNet18 | 69.76 | 89.08 | [PyTorch](https://pytorch.org/hub/pytorch_vision_resnet/) |
+| KD | ResNet18 | 70.50 | 90.48 | Ours |
+| FitNets | ResNet18 | 70.66 | 89.23 | [Residual Knowledge Distillation](https://arxiv.org/abs/2002.09168) 
+| AT | ResNet18 | 70.70 | 90.00 |[attention-transfer](https://github.com/szagoruyko/attention-transfer) |
+| RKD + AT | ResNet18 | 71.54 | 90.26 | [Residual Knowledge Distillation](https://arxiv.org/abs/2002.09168) | 
+| **CD(Ours)** | ResNet18 | 72.32 | 91.61 | Ours |
+
 ## Reference
 
 + [SCA-CNN: Spatial and Channel-Wise Attention in Convolutional Networks for Image Captioning](https://ieeexplore.ieee.org/document/8100150)
