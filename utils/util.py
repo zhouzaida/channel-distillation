@@ -1,15 +1,4 @@
 def adjust_loss_alpha(alpha, epoch, factor=0.9, loss_type="ce_family", loss_rate_decay="lrdv1"):
-    """动态调整蒸馏的比例
-
-    loss_type: 损失函数的类型
-        "ce_family": loss输入为student的pred以及label
-        "kd_family": loss输入为student的pred、teacher的pred
-        "kdv2_family": loss输入为student的pred、teacher的pred以及label
-        "fd_family": loss输入为student的feature、teacher的feature
-    loss_rate_decay: 衰减策略
-        "lrdv1": 一开始就有ce或者kd
-        "lrdv2": 前30epoch没有ce或者kd
-    """
     if loss_rate_decay not in ["lrdv1", "lrdv2", "lrdv3", "lrdv4", "lrdv5"]:
         raise Exception("loss_rate_decay error")
 
