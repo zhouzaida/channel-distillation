@@ -12,15 +12,3 @@ def adjust_loss_alpha(alpha, epoch, factor=0.9, loss_type="ce_family", loss_rate
             return 0 if epoch <= 30 else alpha * (factor ** (epoch // 30))
         else:
             return alpha * (factor ** (epoch // 30))
-    elif loss_rate_decay == "lrdv5":
-        if "ce" in loss_type or "kd" in loss_type:
-            return 0 if epoch <= 60 else alpha
-        else:
-            if epoch >= 160:
-                return alpha * (factor**3)
-            elif epoch >= 120:
-                return alpha * (factor**2)
-            elif epoch >= 60:
-                return alpha * (factor**1)
-            else:
-                return alpha

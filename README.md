@@ -1,4 +1,5 @@
 # Channel Distillation
+PyTorch implement for "Channel Distillation: Channel-Wise Attention for Model Distillation"
 
 ## Novelty
 
@@ -6,7 +7,9 @@
 2. distillation loss rate decay
 3. improved knowledge distillation loss
 
-## Installion
+## Requirements
+Python >= 3.7
+PyTorch >= 1.2.0
 
 ## Training
 

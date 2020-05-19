@@ -4,11 +4,6 @@ from logging.handlers import TimedRotatingFileHandler
 
 
 def get_logger(name, log_dir='log'):
-    """
-    Args:
-        name(str): name of logger
-        log_dir(str): path of log
-    """
     if not os.path.exists(log_dir):
         os.makedirs(log_dir)
 
