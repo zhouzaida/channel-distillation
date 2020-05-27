@@ -7,8 +7,6 @@ PyTorch implement of "Channel Distillation: Channel-Wise Attention for Knowl
 2. Guided Knowledge Distillation
 3. Early Decay Teacher
 
-![Distillation Network Architecture](./assets/arch.png)
-
 ## Requirements
 
 > Python >= 3.7  
