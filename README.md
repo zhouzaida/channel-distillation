@@ -1,17 +1,28 @@
 # Channel Distillation
-PyTorch implement for "Channel Distillation: Channel-Wise Attention for Model Distillation"
+PyTorch implement of "Channel Distillation: Channel-Wise Attention for Knowledge Distillation"
 
 ## Novelty
 
-1. distill channel features
-2. distillation loss rate decay
-3. improved knowledge distillation loss
+1. Channel Distillation
+2. Guided Knowledge Distillation
+3. Early Decay Teacher
+
+<center>
+<img src="./assets/arch.png" width="60%" height="60%" />
+
+Distillation Network Architecture
+</center>
 
 ## Requirements
-Python >= 3.7
-PyTorch >= 1.2.0
+
+> Python >= 3.7  
+>PyTorch >= 1.2.0
 
 ## Training
+
+### Prepare ImageNet Dataset
+
+### Running Experiments
 
 Running the following command and experiment will be launched.
 
@@ -19,7 +30,7 @@ Running the following command and experiment will be launched.
 python3 ./train.py
 ```
 
-If you want to run other experiments, you just need modify following losses in config.py
+If you want to run other experiments, you just need modify following losses in `config.py`
 
 + s_resnet18.t_resnet34.cd.ce
 ```python
@@ -48,18 +59,16 @@ loss_list = [
 
 ## Experiments
 
-+ dataset
++ Dataset
   
-  imagenet
+  ImageNet
 
-+ model
++ Model
   
-  + student: resnet18
-  + teacher: resnet34
+  + Student: ResNet18
+  + Teacher: ResNet34
 
-+ loss detail
-
-+ result
++ Result
 
 | Model structure | Testing on validation| Top-1 error | Top-5 error | Reference |
 | -- | -- | -- | -- | -- |
@@ -67,14 +76,14 @@ loss_list = [
 | ResNet18.at | 1-crop | 29.30 | 10.00 | [attention-transfer](https://github.com/szagoruyko/attention-transfer) |
 | s_resnet18.t_resnet34.kd.ce | 1-crop | 29.50 | 9.52 | KD |
 | s_resnet18.t_resnet34.cd.ce | 1-crop | 28.38 | 9.48 | Ours |
-| s_resnet18.t_resnet34.cd.ce.lrdv1 | 1-crop | 28.36(28.34) | 9.39(9.41) | ZZD(ZGCR) |
-| s_resnet18.t_resnet34.cd.ce.lrdv2 | 1-crop | 28.09(28.00) | 9.34(9.27) | ZZD(ZGCR) |
+| s_resnet18.t_resnet34.cd.ce.lrdv1 | 1-crop | 28.34 | 9.41 | Ours |
+| s_resnet18.t_resnet34.cd.ce.lrdv2 | 1-crop | 28.00 | 9.27 | Ours |
 | s_resnet18.t_resnet34.cd.kd.lrdv2 | 1-crop | 27.99 | 9.31 | Ours |
-| s_resnet18.t_resnet34.cd.kdv2.lrdv2 | 1-crop | 27.73(27.68) | 9.22(9.39) |ZZD(ZGCR) |
+| s_resnet18.t_resnet34.cd.kdv2.lrdv2 | 1-crop | 27.68 | 9.39 | Ours |
 
-+ comparion result with other methods
++ Comparion result with other methods
 
-| Method | Model | Top-1(%) | Top-5(%) | Reference |
+| Method | Model | Top-1 acc(%) | Top-5 acc(%) | Reference |
 | -- | -- | -- | -- | -- |
 | Teacher | ResNet34 | 73.30 | 91.42 | [PyTorch](https://pytorch.org/hub/pytorch_vision_resnet/) |
 | Student | ResNet18 | 69.76 | 89.08 | [PyTorch](https://pytorch.org/hub/pytorch_vision_resnet/) |
@@ -83,8 +92,3 @@ loss_list = [
 | AT | ResNet18 | 70.70 | 90.00 |[attention-transfer](https://github.com/szagoruyko/attention-transfer) |
 | RKD + AT | ResNet18 | 71.54 | 90.26 | [Residual Knowledge Distillation](https://arxiv.org/abs/2002.09168) | 
 | **CD(Ours)** | ResNet18 | 72.32 | 91.61 | Ours |
-
-## Reference
-
-+ [SCA-CNN: Spatial and Channel-Wise Attention in Convolutional Networks for Image Captioning](https://ieeexplore.ieee.org/document/8100150)
-+ [Distilling the Knowledge in a Neural Network](https://arxiv.org/abs/1503.02531)
