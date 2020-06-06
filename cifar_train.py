@@ -1,19 +1,20 @@
 import os
 import shutil
 import time
+import numpy as np
 
 import torch
 import torch.nn as nn
 import torch.backends.cudnn as cudnn
 from torchvision import transforms
+from torchvision.datasets import CIFAR100
 from torch.utils.data import DataLoader
 from torch.optim.lr_scheduler import MultiStepLR
 from torch.optim import SGD
 
-from config import Config
-from datasets.imagenet import ImagenetDataset
+from cifar_config import Config
 import losses
-from models.channel_distillation import ChannelDistillResNet1834
+from models.channel_distillation import ChannelDistillResNet50152
 from utils.average_meter import AverageMeter
 from utils.data_prefetcher import DataPrefetcher
 from utils.logutil import get_logger
@@ -46,16 +47,19 @@ def main():
     logger.info("start loading data")
 
     train_transform = transforms.Compose([
-        transforms.ToPILImage(),
-        transforms.RandomResizedCrop(224),
+        transforms.Pad(4, padding_mode='reflect'),
         transforms.RandomHorizontalFlip(),
+        transforms.RandomCrop(32),
         transforms.ToTensor(),
-        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+        transforms.Normalize(
+            np.array([125.3, 123.0, 113.9]) / 255.0,
+            np.array([63.0, 62.1, 66.7]) / 255.0),
     ])
-    train_dataset = ImagenetDataset(
-        nori_file=Config.train_dataset_path,
+    train_dataset = CIFAR100(
+        Config.train_dataset_path,
         train=True,
         transform=train_transform,
+        download=True,
     )
     train_loader = DataLoader(
         train_dataset,
@@ -65,16 +69,16 @@ def main():
         pin_memory=True,
     )
     val_transform = transforms.Compose([
-        transforms.ToPILImage(),
-        transforms.Resize(256),
-        transforms.CenterCrop(224),
         transforms.ToTensor(),
-        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+        transforms.Normalize(
+            np.array([125.3, 123.0, 113.9]) / 255.0,
+            np.array([63.0, 62.1, 66.7]) / 255.0),
     ])
-    val_dataset = ImagenetDataset(
-        nori_file=Config.val_dataset_path,
+    val_dataset = CIFAR100(
+        Config.val_dataset_path,
         train=False,
         transform=val_transform,
+        download=True,
     )
     val_loader = DataLoader(
         val_dataset,
@@ -85,7 +89,7 @@ def main():
     logger.info("finish loading data")
 
     # network
-    net = ChannelDistillResNet1834(Config.num_classes)
+    net = ChannelDistillResNet50152(Config.num_classes, Config.dataset_type)
     net = nn.DataParallel(net).cuda()
 
     # loss and optimizer
@@ -93,13 +97,13 @@ def main():
     for loss_item in Config.loss_list:
         loss_name = loss_item["loss_name"]
         loss_type = loss_item["loss_type"]
-        if "kd" in loss_type:  # 温度系数
+        if "kd" in loss_type:
             criterion.append(losses.__dict__[loss_name](loss_item["T"]).cuda())
         else:
             criterion.append(losses.__dict__[loss_name]().cuda())
 
-    optimizer = SGD(net.parameters(), lr=Config.lr, momentum=0.9, weight_decay=1e-4)
-    scheduler = MultiStepLR(optimizer, milestones=[30, 60, 90], gamma=0.1)
+    optimizer = SGD(net.parameters(), lr=Config.lr, momentum=0.9, weight_decay=5e-4)
+    scheduler = MultiStepLR(optimizer, milestones=[60, 120, 160], gamma=0.2)
 
     # only evaluate
     if Config.evaluate:
@@ -136,7 +140,7 @@ def main():
     best_acc = 0.
     for epoch in range(start_epoch, Config.epochs + 1):
         prec1, prec5, loss = train(train_loader, net, criterion, optimizer, scheduler,
-                                   epoch, looger)
+                                   epoch, logger)
         logger.info(f"train: epoch {epoch:0>3d}, top1 acc: {prec1:.2f}%, top5 acc: {prec5:.2f}%")
 
         prec1, prec5 = validate(val_loader, net)
@@ -161,7 +165,7 @@ def main():
             best_acc = prec1
 
     training_time = (time.time() - start_time) / 3600
-    logger.info(f"finish training, total training time: {training_time:.2f} hours")
+    logger.info(f"finish training, best acc: {best_acc:.2f}%, total training time: {training_time:.2f} hours")
 
 
 def train(train_loader, net, criterion, optimizer, scheduler, epoch, logger):
@@ -176,7 +180,9 @@ def train(train_loader, net, criterion, optimizer, scheduler, epoch, logger):
         factor = loss_item["factor"]
         loss_type = loss_item["loss_type"]
         loss_rate_decay = loss_item["loss_rate_decay"]
-        loss_alphas.append(adjust_loss_alpha(loss_rate, epoch, factor, loss_type, loss_rate_decay))
+        loss_alphas.append(
+            adjust_loss_alpha(loss_rate, epoch, factor, loss_type, loss_rate_decay, Config.dataset_type)
+        )
 
     # switch to train mode
     net.train()

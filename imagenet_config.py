@@ -2,11 +2,12 @@ class Config:
 
     log = "./log"  # Path to save log
     checkpoints = "./checkpoints"  # Path to store model
-    resume = "./checkpoints/latest.pth"  # 从断点出重新加载模型，resume为模型地址
-    evaluate = None  # 测试模型，evaluate为模型地址
+    resume = "./checkpoints/latest.pth"
+    evaluate = None  # path of evaluated model
 
-    train_dataset_path = "/data/datasets/ILSVRC2012/imagenet.train.nori.list"
-    val_dataset_path = "/data/datasets/ILSVRC2012/imagenet.val.nori.list"
+    dataset_type = "imagenet"
+    train_dataset_path = "./data/ILSVRC2012/train"
+    val_dataset_path = "./data/ILSVRC2012/val"
 
     num_classes = 1000  # Number of classes
     epochs = 100  # Total training epochs
