@@ -1,8 +1,8 @@
 # Channel Distillation
 
-PyTorch implement of [Channel Distillation: Channel-Wise Attention for Knowledge Distillation](https://arxiv.org/abs/2006.01683))
+PyTorch implement of [Channel Distillation: Channel-Wise Attention for Knowledge Distillation](https://arxiv.org/abs/2006.01683)
 
-<img src="assets/arch.png" width = "400" alt="The architecture of our distillation network"/>
+![](assets/arch.png)
 
 ## Novelty
 
