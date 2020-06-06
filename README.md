@@ -2,7 +2,7 @@
 
 PyTorch implement of [Channel Distillation: Channel-Wise Attention for Knowledge Distillation](https://arxiv.org/abs/2006.01683)
 
-## Novelty
+## Innovation
 
 1. Channel Distillation (CD)
 2. Guided Knowledge Distillation (GKD)
