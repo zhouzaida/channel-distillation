@@ -2,7 +2,7 @@
 
 PyTorch implement of [Channel Distillation: Channel-Wise Attention for Knowledge Distillation](https://arxiv.org/abs/2006.01683)
 
-![Image text](assets/arch.png)
+![Image text](https://github.com/zhouzaida/channel-distillation/blob/master/assets/architecutre.png)
 
 ## Novelty
 
