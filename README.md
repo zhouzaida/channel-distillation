@@ -2,8 +2,6 @@
 
 PyTorch implement of [Channel Distillation: Channel-Wise Attention for Knowledge Distillation](https://arxiv.org/abs/2006.01683)
 
-![Image text](https://github.com/zhouzaida/channel-distillation/blob/master/assets/architecutre.png)
-
 ## Novelty
 
 1. Channel Distillation (CD)
@@ -12,6 +10,33 @@ PyTorch implement of [Channel Distillation: Channel-Wise Attention for Knowl
 
 **Note**
 > In our code, kdv2 means GKD and lrd2 means EDT.
+
+## Structure of Repository
+```
+├── cifar_config.py
+├── cifar_train.py
+├── data
+│   └── directory_of_data.md
+├── imagenet_config.py
+├── imagenet_train.py
+├── losses
+│   ├── cd_loss.py
+│   ├── ce_loss.py
+│   ├── __init__.py
+│   └── kd_loss.py
+├── models
+│   ├── channel_distillation.py
+│   ├── __init__.py
+│   └── resnet.py
+├── README.md
+└── utils
+    ├── average_meter.py
+    ├── data_prefetcher.py
+    ├── __init__.py
+    ├── logutil.py
+    ├── metric.py
+    └── util.py
+```
 
 ## Requirements
 
