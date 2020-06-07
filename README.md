@@ -8,7 +8,7 @@ PyTorch implement of [Channel Distillation: Channel-Wise Attention for Knowl
 2. Guided Knowledge Distillation (GKD)
 3. Early Decay Teacher (EDT)
 
-**Note**
+Note
 > In our code, kdv2 means GKD and lrd2 means EDT.
 
 ## Structure of Repository
@@ -41,7 +41,7 @@ PyTorch implement of [Channel Distillation: Channel-Wise Attention for Knowl
 ## Requirements
 
 > python >= 3.7  
-> torch >= 1.4.0 
+> torch >= 1.4.0  
 > torvision >= 0.5.0
 
 ## Experiments
@@ -65,7 +65,7 @@ images are arranged in this way
 
 #### Training
 
-**Note**
+Note  
 > Teacher checkpoint will be downloaded automatically.  
 
 Running the following command and experiment will be launched.
