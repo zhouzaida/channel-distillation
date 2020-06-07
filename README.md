@@ -13,19 +13,19 @@ PyTorch implement of [Channel Distillation: Channel-Wise Attention for Knowl
 
 ## Structure of Repository
 ```
-├── cifar_config.py
+├── cifar_config.py  # hyperparameters
 ├── cifar_train.py
 ├── data
 │   └── directory_of_data.md
-├── imagenet_config.py
+├── imagenet_config.py  # hyperparameters
 ├── imagenet_train.py
 ├── losses
-│   ├── cd_loss.py
+│   ├── cd_loss.py  # CD Loss implement
 │   ├── ce_loss.py
 │   ├── __init__.py
-│   └── kd_loss.py
+│   └── kd_loss.py  # GKD Loss implement
 ├── models
-│   ├── channel_distillation.py
+│   ├── channel_distillation.py  # Distillation Network
 │   ├── __init__.py
 │   └── resnet.py
 ├── README.md
@@ -35,13 +35,13 @@ PyTorch implement of [Channel Distillation: Channel-Wise Attention for Knowl
     ├── __init__.py
     ├── logutil.py
     ├── metric.py
-    └── util.py
+    └── util.py  # Early Decay Teacher
 ```
 
 ## Requirements
 
 > python >= 3.7  
-> torch >= 1.4.0
+> torch >= 1.4.0 
 > torvision >= 0.5.0
 
 ## Experiments
@@ -64,6 +64,9 @@ images are arranged in this way
 ```
 
 #### Training
+
+**Note**
+> Teacher checkpoint will be downloaded automatically.  
 
 Running the following command and experiment will be launched.
 
@@ -130,6 +133,9 @@ loss_list = [
 CIFAR100 dataset will be downloaded automatically.
 
 #### Training
+
+**Note**
+> Teacher checkpoint will be downloaded automatically.
 
 Running the following command and experiment will be launched.
 

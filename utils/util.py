@@ -1,4 +1,6 @@
 def adjust_loss_alpha(alpha, epoch, factor=0.9, loss_type="ce_family", loss_rate_decay="lrdv1", dataset_type="imagenet"):
+    """Early Decay Teacher"""
+
     if dataset_type == "imagenet":
         if loss_rate_decay == "lrdv1":
             return alpha * (factor ** (epoch // 30))

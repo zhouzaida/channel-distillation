@@ -1,6 +1,6 @@
 class Config:
     log = "./log"  # Path to save log
-    checkpoint_path = "./checkpoints"  # Path to store model
+    checkpoints = "./checkpoints"  # Path to store model
     resume = "./checkpoints/latest.pth"
     evaluate = None
     dataset_type = "cifar"
