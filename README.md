@@ -134,7 +134,7 @@ CIFAR100 dataset will be downloaded automatically.
 
 #### Training
 
-**Note**
+Note
 > Teacher checkpoint will be downloaded automatically.
 
 Running the following command and experiment will be launched.
