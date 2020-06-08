@@ -8,7 +8,7 @@ __all__ = ['ResNet', 'resnet18', 'resnet34', 'resnet50', 'resnet101', 'resnet152
 
 model_urls = {
     'resnet34': 'https://download.pytorch.org/models/resnet34-333f7ec4.pth',  # for imagenet
-    'resnet152': 'https://download.pytorch.org/models/resnet152-b121ed2d.pth',  # for cifar
+    'resnet152': './pretrained/resnet152-cifar.pth',  # for cifar
 }
 
 
@@ -223,7 +223,10 @@ class ResNet(nn.Module):
 def _resnet(arch, block, layers, pretrained, progress, **kwargs):
     model = ResNet(block, layers, **kwargs)
     if pretrained:
-        state_dict = load_state_dict_from_url(model_urls[arch], progress=progress)
+        if arch == "resnet34":
+            state_dict = load_state_dict_from_url(model_urls[arch], progress=progress)
+        else:  # resnet152
+            state_dict = torch.load(model_urls[arch], map_location=torch.device('cpu'))
         model.load_state_dict(state_dict)
     return model
 

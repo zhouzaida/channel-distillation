@@ -13,21 +13,23 @@ Note
 
 ## Structure of Repository
 ```
-├── cifar_config.py  # hyperparameters
+├── cifar_config.py  # Hyperparameters
 ├── cifar_train.py
 ├── data
 │   └── directory_of_data.md
-├── imagenet_config.py  # hyperparameters
+├── imagenet_config.py  # Hyperparameters
 ├── imagenet_train.py
 ├── losses
-│   ├── cd_loss.py  # CD Loss implement
+│   ├── cd_loss.py  # CD Loss
 │   ├── ce_loss.py
 │   ├── __init__.py
-│   └── kd_loss.py  # GKD Loss implement
+│   └── kd_loss.py  # GKD Loss
 ├── models
 │   ├── channel_distillation.py  # Distillation Network
 │   ├── __init__.py
 │   └── resnet.py
+├── pretrain
+│   └── path_of_teacher_checkpoint.md
 ├── README.md
 └── utils
     ├── average_meter.py
@@ -42,7 +44,7 @@ Note
 
 > python >= 3.7  
 > torch >= 1.4.0  
-> torvision >= 0.5.0
+> torchvision >= 0.5.0
 
 ## Experiments
 
@@ -51,16 +53,15 @@ Note
 #### Prepare Dataset
 
 + Download the ImageNet dataset from http://www.image-net.org/
-+ Then, and move validation images to labeled subfolders, using [the following shell script](https://raw.githubusercontent.com/soumith/imagenetloader.torch/master/valprep.sh)
-+ Path of data need be set in `imagenet_config.py`
++ Then, move validation images to labeled subfolders, using [the following shell script](https://raw.githubusercontent.com/soumith/imagenetloader.torch/master/valprep.sh)
 
 ```bash
-images are arranged in this way
+images should be arranged in this way
 
-./data/train/dog/xxx.png
-./data/train/cat/xxy.png
-./data/val/dog/xxx.png
-./data/val/cat/xxy.png
+./data/ILSVRC2012/train/dog/xxx.png
+./data/ILSVRC2012/train/cat/xxy.png
+./data/ILSVRC2012/val/dog/xxx.png
+./data/ILSVRC2012/val/cat/xxy.png
 ```
 
 #### Training
@@ -135,7 +136,8 @@ CIFAR100 dataset will be downloaded automatically.
 #### Training
 
 Note
-> Teacher checkpoint will be downloaded automatically.
+> Download the teacher checkpoint from [here](https://drive.google.com/file/d/1e3IW5pxH7W-aOipIY7cGQJ3dmRrHXZ51/view)  
+> Then, put the checkpoint in the pretrain directory
 
 Running the following command and experiment will be launched.
 
