@@ -8,7 +8,7 @@ __all__ = ['ResNet', 'resnet18', 'resnet34', 'resnet50', 'resnet101', 'resnet152
 
 model_urls = {
     'resnet34': 'https://download.pytorch.org/models/resnet34-333f7ec4.pth',  # for imagenet
-    'resnet152': './pretrained/resnet152-cifar.pth',  # for cifar
+    'resnet152': './pretrain/resnet152-cifar.pth',  # for cifar
 }
 
 
